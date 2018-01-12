@@ -1,0 +1,92 @@
+<div class="form-holder">
+  <form class="register-form" (ngSubmit)="onSubmit($event)" novalidate [formGroup]="resetForm">
+    <div class="row">
+      <div
+        class="field-holder"
+        [ngClass]="{'invalid-state': isFieldInvalid('email', 'email')}">
+        <input type="email" placeholder="Email" formControlName="email">
+        <div class="validation-notes">
+          <p>Displays errors with delay 300ms (oldstyle, but can be replaced by custom component or maybe directive)</p>
+          <p>Email: asd@asd.asd is INVALID - async validator</p>
+        </div>
+        <div class="error-holder">
+          <div class="required-error" *ngIf="isFieldHasError('email', 'email')">Enter valid email</div>
+          <div class="required-error-async" *ngIf="isFieldHasError('email', 'emailAsync')">You can't use EMAIL asd@asd.asd</div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div
+        class="field-holder"
+        [ngClass]="{'invalid-state': isFieldInvalid('phone')}">
+        <input type="tel" placeholder="Phone" formControlName="phone">
+        <div class="error-holder">
+          <div class="required-error" *ngIf="isFieldHasError('phone')">Phone number is required</div>
+          <div class="required-error-pattern" *ngIf="isFieldHasError('phone', 'pattern')">Enter valid Phone number e.g. +33923456789</div>   
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div
+        class="field-holder"
+        [ngClass]="{'invalid-state': isFieldInvalid('username')}">
+        <input type="text" placeholder="Username" formControlName="username">
+        <div class="validation-notes">
+          <p>Username should not be Admin</p>
+        </div>
+        <div class="error-holder">
+            <div class="required-error" *ngIf="isFieldHasError('username')">Enter Username</div>
+            <div class="required-error-length" *ngIf="isFieldHasError('username', 'minLength')">Username should not be less then 4 charts</div>
+            <div class="required-error-forbidden" *ngIf="isFieldHasError('username', 'forbidden')">Username should not be Admin</div>   
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div
+        class="field-holder"
+        [ngClass]="{'invalid-state': isFieldInvalid('password')}">
+        <input type="password" placeholder="Password" formControlName="password">
+        <div class="error-holder">
+          <div class="required-error" *ngIf="isFieldHasError('password')">Password is required</div>
+          <div class="required-error-strength" *ngIf="isFieldHasError('password', 'strength')">Bad Password</div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div
+        class="field-holder"
+        [ngClass]="{'invalid-state': isFieldInvalid('confirmPassword')}">
+        <input type="password" placeholder="Confirm Password" formControlName="confirmPassword">
+        <div class="error-holder">
+            <div class="required-error" *ngIf="isFieldHasError('confirmPassword')">Password is required</div>
+            <div class="required-error-equals" *ngIf="isFieldHasError('confirmPassword', 'equal')">Password Confiramation should be equal to Password</div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="field-holder">
+        <label>Male <input type="radio" value="male" name="gender" formControlName="gender"></label>
+        <label>Female <input type="radio" value="female" name="gender" formControlName="gender"></label>
+      </div>
+    </div>
+    <div class="row">
+      <div
+        class="field-holder agreed-holder"
+        [ngClass]="{'invalid-state': isFieldInvalid('agreed')}">
+        <label>
+          <input type="checkbox" name="agreed" formControlName="agreed">
+           I agree to the Terms and Conditions
+        </label>
+      </div>
+    </div>
+    <div class="buttons-holder">
+      <button type="submit" [disabled]="resetForm.invalid">Register Me</button>
+      <button type="reset" [disabled]="resetForm.pristine" (click)="onReset($event)">Cancel</button>
+    </div>
+    <hr>
+    <hr>
+    <hr>
+    <h3>Form model:</h3>
+    <pre>{{ resetForm.value | json }}</pre>
+  </form>
+</div>
